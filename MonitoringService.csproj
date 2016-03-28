@@ -126,6 +126,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -136,6 +138,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataSender.cs" />
     <Compile Include="DataSource\CheckResult.cs" />
     <Compile Include="DataSource\MonitoringServiceDbContext.cs" />
     <Compile Include="MonitoringService.cs">
@@ -154,10 +157,19 @@
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\IcingaWebServiceRef\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Service References\IcingaWebServiceRef\icingaWebService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\IcingaWebServiceRef\IcingaWebServiceService.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MonitoringService.resx">
@@ -168,9 +180,24 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Service References\IcingaWebServiceRef\configuration91.svcinfo" />
+    <None Include="Service References\IcingaWebServiceRef\configuration.svcinfo" />
+    <None Include="Service References\IcingaWebServiceRef\MonitoringService.IcingaWebServiceRef.processChecksResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IcingaWebServiceRef\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="sqlite3.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\IcingaWebServiceRef\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

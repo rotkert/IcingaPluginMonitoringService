@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://mkaminski.mgr/" name="IcingaWebServiceService" targetNamespace="http://mkaminski.mgr/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="http://icingaubuntu.cloudapp.net:8080/IcingaWebService/icingaWebService?xsd=1" namespace="http://mkaminski.mgr/" />
+    </xsd:schema>
+  </types>
+  <message name="processChecks">
+    <part name="checks" type="tns:checksWrapper" />
+  </message>
+  <message name="processChecksResponse">
+    <part name="return" type="xsd:string" />
+  </message>
+  <portType name="IcingaWebService">
+    <operation name="processChecks">
+      <input message="tns:processChecks" />
+      <output message="tns:processChecksResponse" />
+    </operation>
+  </portType>
+  <binding name="IcingaWebServicePortBinding" type="tns:IcingaWebService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <operation name="processChecks">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://mkaminski.mgr/" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://mkaminski.mgr/" />
+      </output>
+    </operation>
+  </binding>
+  <service name="IcingaWebServiceService">
+    <port name="IcingaWebServicePort" binding="tns:IcingaWebServicePortBinding">
+      <soap:address location="http://icingaubuntu.cloudapp.net:8080/IcingaWebService/icingaWebService" />
+    </port>
+  </service>
+</definitions>

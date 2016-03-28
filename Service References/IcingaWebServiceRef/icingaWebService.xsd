@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://mkaminski.mgr/" targetNamespace="http://mkaminski.mgr/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="checksWrapper" type="tns:checksWrapper" />
+  <xs:complexType name="checksWrapper">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="checks" type="tns:Check" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Check">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="hostName" type="xs:string" />
+      <xs:element minOccurs="0" name="serviceName" type="xs:string" />
+      <xs:element name="result" type="xs:double" />
+      <xs:element name="timestamp" type="xs:long" />
+      <xs:element minOccurs="0" name="state" type="xs:string" />
+      <xs:element name="hasExceeded" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -13,6 +13,7 @@ namespace MonitoringService
     public partial class MonitoringService : ServiceBase
     {
         private PerfCountersHandler perfCountersHandler;
+        private DataSender dataSender;
 
         public MonitoringService()
         {
@@ -20,15 +21,22 @@ namespace MonitoringService
             initializeEventLog();
 
             perfCountersHandler = new PerfCountersHandler();
+            dataSender = new DataSender();
         }
 
         protected override void OnStart(string[] args)
         {
             eventLog1.WriteEntry("Monitoring service started", EventLogEntryType.Information);
+
             System.Timers.Timer timer = new System.Timers.Timer();
-            timer.Interval = 10000; // 10 seconds
+            timer.Interval = 60000; // 1 minute
             timer.Elapsed += new System.Timers.ElapsedEventHandler(this.OnTimer);
             timer.Start();
+
+            System.Timers.Timer sendingTimer = new System.Timers.Timer();
+            sendingTimer.Interval = 120000; // 2 minutes
+            sendingTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.OnSendingTimer);
+            sendingTimer.Start();
         }
 
         protected override void OnStop()
@@ -39,6 +47,11 @@ namespace MonitoringService
         public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
         {
             perfCountersHandler.checkCounters();
+        }
+
+        public void OnSendingTimer(object sender, System.Timers.ElapsedEventArgs args)
+        {
+            dataSender.send();
         }
 
         private void initializeEventLog()

@@ -44,7 +44,7 @@ namespace MonitoringService
         private List<PerfCounter> loadCounters()
         {
             List<PerfCounter> perfCounters = new List<PerfCounter>();
-            perfCounters.Add(new PerfCounter("Procesor","_Total", "Czas procesora (%)", "Procesor", 2, 10, false));
+            perfCounters.Add(new PerfCounter("Procesor","_Total", "Czas procesora (%)", "diagnostics", 2, 10, false));
             return perfCounters;
         }
 
