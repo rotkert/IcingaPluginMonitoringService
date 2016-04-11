@@ -15,6 +15,15 @@ namespace IcingaWebServiceRef {
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://mkaminski.mgr/", ConfigurationName="IcingaWebServiceRef.IcingaWebService")]
     public interface IcingaWebService {
         
+        // CODEGEN: Parameter 'reportContent' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        IcingaWebServiceRef.uploadReportResponse uploadReport(IcingaWebServiceRef.uploadReportRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
+        System.Threading.Tasks.Task<IcingaWebServiceRef.uploadReportResponse> uploadReportAsync(IcingaWebServiceRef.uploadReportRequest request);
+        
         // CODEGEN: Parameter 'checks' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlArrayAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -23,6 +32,62 @@ namespace IcingaWebServiceRef {
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         System.Threading.Tasks.Task<IcingaWebServiceRef.processChecksResponse> processChecksAsync(IcingaWebServiceRef.processChecksRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="configRules")]
+        IcingaWebServiceRef.cfgRulesWrapper getConfig();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="configRules")]
+        System.Threading.Tasks.Task<IcingaWebServiceRef.cfgRulesWrapper> getConfigAsync();
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="uploadReport", WrapperNamespace="http://mkaminski.mgr/", IsWrapped=true)]
+    public partial class uploadReportRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string hostName;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public long timestamp;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        public string reportName;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary")]
+        public byte[] reportContent;
+        
+        public uploadReportRequest() {
+        }
+        
+        public uploadReportRequest(string hostName, long timestamp, string reportName, byte[] reportContent) {
+            this.hostName = hostName;
+            this.timestamp = timestamp;
+            this.reportName = reportName;
+            this.reportContent = reportContent;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="uploadReportResponse", WrapperNamespace="http://mkaminski.mgr/", IsWrapped=true)]
+    public partial class uploadReportResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string @return;
+        
+        public uploadReportResponse() {
+        }
+        
+        public uploadReportResponse(string @return) {
+            this.@return = @return;
+        }
     }
     
     /// <remarks/>
@@ -127,6 +192,247 @@ namespace IcingaWebServiceRef {
         }
     }
     
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1064.2")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://mkaminski.mgr/")]
+    public partial class CfgCounterRule : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private bool aboveField;
+        
+        private int counterIdField;
+        
+        private double criticalValueField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public bool above {
+            get {
+                return this.aboveField;
+            }
+            set {
+                this.aboveField = value;
+                this.RaisePropertyChanged("above");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public int counterId {
+            get {
+                return this.counterIdField;
+            }
+            set {
+                this.counterIdField = value;
+                this.RaisePropertyChanged("counterId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
+        public double criticalValue {
+            get {
+                return this.criticalValueField;
+            }
+            set {
+                this.criticalValueField = value;
+                this.RaisePropertyChanged("criticalValue");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1064.2")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://mkaminski.mgr/")]
+    public partial class CfgRule : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private CfgCounterRule[] cfgCounterRulesWrapperField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("cfgCounterRules", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, IsNullable=false)]
+        public CfgCounterRule[] cfgCounterRulesWrapper {
+            get {
+                return this.cfgCounterRulesWrapperField;
+            }
+            set {
+                this.cfgCounterRulesWrapperField = value;
+                this.RaisePropertyChanged("cfgCounterRulesWrapper");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1064.2")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://mkaminski.mgr/")]
+    public partial class CfgCounterDetails : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string categoryField;
+        
+        private string counterField;
+        
+        private string instanceField;
+        
+        private int maxChecksField;
+        
+        private int minChecksField;
+        
+        private string serviceNameField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public string category {
+            get {
+                return this.categoryField;
+            }
+            set {
+                this.categoryField = value;
+                this.RaisePropertyChanged("category");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public string counter {
+            get {
+                return this.counterField;
+            }
+            set {
+                this.counterField = value;
+                this.RaisePropertyChanged("counter");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
+        public string instance {
+            get {
+                return this.instanceField;
+            }
+            set {
+                this.instanceField = value;
+                this.RaisePropertyChanged("instance");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
+        public int maxChecks {
+            get {
+                return this.maxChecksField;
+            }
+            set {
+                this.maxChecksField = value;
+                this.RaisePropertyChanged("maxChecks");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
+        public int minChecks {
+            get {
+                return this.minChecksField;
+            }
+            set {
+                this.minChecksField = value;
+                this.RaisePropertyChanged("minChecks");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
+        public string serviceName {
+            get {
+                return this.serviceNameField;
+            }
+            set {
+                this.serviceNameField = value;
+                this.RaisePropertyChanged("serviceName");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1064.2")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://mkaminski.mgr/")]
+    public partial class cfgRulesWrapper : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private CfgCounterDetails[] cfgCountersField;
+        
+        private CfgRule[] cfgRulesField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("cfgCounters", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public CfgCounterDetails[] cfgCounters {
+            get {
+                return this.cfgCountersField;
+            }
+            set {
+                this.cfgCountersField = value;
+                this.RaisePropertyChanged("cfgCounters");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("cfgRules", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public CfgRule[] cfgRules {
+            get {
+                return this.cfgRulesField;
+            }
+            set {
+                this.cfgRulesField = value;
+                this.RaisePropertyChanged("cfgRules");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -191,6 +497,35 @@ namespace IcingaWebServiceRef {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        IcingaWebServiceRef.uploadReportResponse IcingaWebServiceRef.IcingaWebService.uploadReport(IcingaWebServiceRef.uploadReportRequest request) {
+            return base.Channel.uploadReport(request);
+        }
+        
+        public string uploadReport(string hostName, long timestamp, string reportName, byte[] reportContent) {
+            IcingaWebServiceRef.uploadReportRequest inValue = new IcingaWebServiceRef.uploadReportRequest();
+            inValue.hostName = hostName;
+            inValue.timestamp = timestamp;
+            inValue.reportName = reportName;
+            inValue.reportContent = reportContent;
+            IcingaWebServiceRef.uploadReportResponse retVal = ((IcingaWebServiceRef.IcingaWebService)(this)).uploadReport(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<IcingaWebServiceRef.uploadReportResponse> IcingaWebServiceRef.IcingaWebService.uploadReportAsync(IcingaWebServiceRef.uploadReportRequest request) {
+            return base.Channel.uploadReportAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<IcingaWebServiceRef.uploadReportResponse> uploadReportAsync(string hostName, long timestamp, string reportName, byte[] reportContent) {
+            IcingaWebServiceRef.uploadReportRequest inValue = new IcingaWebServiceRef.uploadReportRequest();
+            inValue.hostName = hostName;
+            inValue.timestamp = timestamp;
+            inValue.reportName = reportName;
+            inValue.reportContent = reportContent;
+            return ((IcingaWebServiceRef.IcingaWebService)(this)).uploadReportAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         IcingaWebServiceRef.processChecksResponse IcingaWebServiceRef.IcingaWebService.processChecks(IcingaWebServiceRef.processChecksRequest request) {
             return base.Channel.processChecks(request);
         }
@@ -211,6 +546,14 @@ namespace IcingaWebServiceRef {
             IcingaWebServiceRef.processChecksRequest inValue = new IcingaWebServiceRef.processChecksRequest();
             inValue.checks = checks;
             return ((IcingaWebServiceRef.IcingaWebService)(this)).processChecksAsync(inValue);
+        }
+        
+        public IcingaWebServiceRef.cfgRulesWrapper getConfig() {
+            return base.Channel.getConfig();
+        }
+        
+        public System.Threading.Tasks.Task<IcingaWebServiceRef.cfgRulesWrapper> getConfigAsync() {
+            return base.Channel.getConfigAsync();
         }
     }
 }

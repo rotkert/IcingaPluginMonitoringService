@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MonitoringService.Communication;
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -6,12 +8,14 @@ using System.Diagnostics;
 using System.Linq;
 using System.ServiceProcess;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MonitoringService
 {
     public partial class MonitoringService : ServiceBase
     {
+        private BlockingCollection<QueueElement> blockingQueue;
         private PerfCountersHandler perfCountersHandler;
         private DataSender dataSender;
 
@@ -20,8 +24,12 @@ namespace MonitoringService
             InitializeComponent();
             initializeEventLog();
 
-            perfCountersHandler = new PerfCountersHandler();
+            blockingQueue = new BlockingCollection<QueueElement>();
+            perfCountersHandler = new PerfCountersHandler(blockingQueue);
             dataSender = new DataSender();
+
+            Thread senderThread = new Thread(() => dataSender.work(blockingQueue));
+            senderThread.Start();
         }
 
         protected override void OnStart(string[] args)
@@ -29,14 +37,9 @@ namespace MonitoringService
             eventLog1.WriteEntry("Monitoring service started", EventLogEntryType.Information);
 
             System.Timers.Timer timer = new System.Timers.Timer();
-            timer.Interval = 60000; // 1 minute
+            timer.Interval = 30000; // 5 sec
             timer.Elapsed += new System.Timers.ElapsedEventHandler(this.OnTimer);
             timer.Start();
-
-            System.Timers.Timer sendingTimer = new System.Timers.Timer();
-            sendingTimer.Interval = 120000; // 2 minutes
-            sendingTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.OnSendingTimer);
-            sendingTimer.Start();
         }
 
         protected override void OnStop()
@@ -47,11 +50,6 @@ namespace MonitoringService
         public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
         {
             perfCountersHandler.checkCounters();
-        }
-
-        public void OnSendingTimer(object sender, System.Timers.ElapsedEventArgs args)
-        {
-            dataSender.send();
         }
 
         private void initializeEventLog()

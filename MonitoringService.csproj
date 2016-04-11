@@ -15,6 +15,21 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -138,7 +153,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataSender.cs" />
+    <Compile Include="Communication\DataSender.cs" />
+    <Compile Include="Communication\QueueElement.cs" />
+    <Compile Include="Counters\CounterRule.cs" />
+    <Compile Include="Counters\Rule.cs" />
     <Compile Include="DataSource\CheckResult.cs" />
     <Compile Include="DataSource\MonitoringServiceDbContext.cs" />
     <Compile Include="MonitoringService.cs">
@@ -147,8 +165,8 @@
     <Compile Include="MonitoringService.Designer.cs">
       <DependentUpon>MonitoringService.cs</DependentUpon>
     </Compile>
-    <Compile Include="PerfCounter.cs" />
-    <Compile Include="PerfCountersHandler.cs" />
+    <Compile Include="Counters\PerfCounter.cs" />
+    <Compile Include="Counters\PerfCountersHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
@@ -182,7 +200,13 @@
   <ItemGroup>
     <None Include="Service References\IcingaWebServiceRef\configuration91.svcinfo" />
     <None Include="Service References\IcingaWebServiceRef\configuration.svcinfo" />
+    <None Include="Service References\IcingaWebServiceRef\MonitoringService.IcingaWebServiceRef.cfgRulesWrapper.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\IcingaWebServiceRef\MonitoringService.IcingaWebServiceRef.processChecksResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IcingaWebServiceRef\MonitoringService.IcingaWebServiceRef.uploadReportResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\IcingaWebServiceRef\Reference.svcmap">
@@ -198,6 +222,18 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\IcingaWebServiceRef\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

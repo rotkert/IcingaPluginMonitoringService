@@ -1,6 +1,8 @@
 ﻿using Microsoft.Data.Entity;
+using MonitoringService.Communication;
 using MonitoringService.DataSource;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +12,22 @@ namespace MonitoringService
 {
     class DataSender
     {
-        public void send()
+        public void work(BlockingCollection<QueueElement> blockingQueue)
         {
-            sendChecks();
+            while (true)
+            {
+                QueueElement queueElement = blockingQueue.Take();
+                switch(queueElement.messageType)
+                {
+                    case MessageType.Counters:
+                        sendChecks();
+                        break;
+                    case MessageType.Report:
+                        break;
+                    case MessageType.Configuration:
+                        break;
+                }
+            }
         }
 
         private void sendChecks()

@@ -5,21 +5,60 @@
       <xsd:import schemaLocation="http://icingaubuntu.cloudapp.net:8080/IcingaWebService/icingaWebService?xsd=1" namespace="http://mkaminski.mgr/" />
     </xsd:schema>
   </types>
+  <message name="uploadReport">
+    <part name="hostName" type="xsd:string" />
+    <part name="timestamp" type="xsd:long" />
+    <part name="reportName" type="xsd:string" />
+    <part name="reportContent" type="xsd:base64Binary" />
+  </message>
+  <message name="uploadReportResponse">
+    <part name="return" type="xsd:string" />
+  </message>
   <message name="processChecks">
     <part name="checks" type="tns:checksWrapper" />
   </message>
   <message name="processChecksResponse">
     <part name="return" type="xsd:string" />
   </message>
+  <message name="getConfig" />
+  <message name="getConfigResponse">
+    <part name="configRules" type="tns:cfgRulesWrapper" />
+  </message>
   <portType name="IcingaWebService">
+    <operation name="uploadReport" parameterOrder="hostName timestamp reportName reportContent">
+      <input message="tns:uploadReport" />
+      <output message="tns:uploadReportResponse" />
+    </operation>
     <operation name="processChecks">
       <input message="tns:processChecks" />
       <output message="tns:processChecksResponse" />
     </operation>
+    <operation name="getConfig">
+      <input message="tns:getConfig" />
+      <output message="tns:getConfigResponse" />
+    </operation>
   </portType>
   <binding name="IcingaWebServicePortBinding" type="tns:IcingaWebService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <operation name="uploadReport">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://mkaminski.mgr/" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://mkaminski.mgr/" />
+      </output>
+    </operation>
     <operation name="processChecks">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://mkaminski.mgr/" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://mkaminski.mgr/" />
+      </output>
+    </operation>
+    <operation name="getConfig">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" namespace="http://mkaminski.mgr/" />

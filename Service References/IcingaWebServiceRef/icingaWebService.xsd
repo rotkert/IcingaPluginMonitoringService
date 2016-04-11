@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://mkaminski.mgr/" targetNamespace="http://mkaminski.mgr/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="cfgRulesWrapper" type="tns:cfgRulesWrapper" />
   <xs:element name="checksWrapper" type="tns:checksWrapper" />
+  <xs:complexType name="cfgRulesWrapper">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="cfgCounters" type="tns:CfgCounterDetails" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="cfgRules" type="tns:CfgRule" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CfgCounterDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="category" type="xs:string" />
+      <xs:element minOccurs="0" name="counter" type="xs:string" />
+      <xs:element minOccurs="0" name="instance" type="xs:string" />
+      <xs:element name="maxChecks" type="xs:int" />
+      <xs:element name="minChecks" type="xs:int" />
+      <xs:element minOccurs="0" name="serviceName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CfgRule">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="cfgCounterRulesWrapper" type="tns:CfgCounterRules" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CfgCounterRules">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="cfgCounterRules" type="tns:CfgCounterRule" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CfgCounterRule">
+    <xs:sequence>
+      <xs:element name="above" type="xs:boolean" />
+      <xs:element name="counterId" type="xs:int" />
+      <xs:element name="criticalValue" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="checksWrapper">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="checks" type="tns:Check" />
